@@ -40,12 +40,13 @@ import 'dart:convert';
 
       }
 
-      editCon(String title,dynamic controller,String key){
+      editContainer(String title,dynamic controller,String key,String tit){
       return  Padding(
-          padding: const EdgeInsets.only(top:30.0,left: 15,right: 15),
+          padding: const EdgeInsets.only(top:15.0,left: 15,right: 15),
           child: Column(
             children: [
 
+              Text(tit,style: myStyle(),),
               TextField(
 
 
@@ -112,12 +113,12 @@ import 'dart:convert';
       );
       }
 
-       myContainer(Widget w,String title,dynamic c,String key) {
+       myContainer(Widget w,String title,dynamic c,String key,String tit) {
        return GestureDetector(
          onTap: (){
 
          showModalBottomSheet(builder: (BuildContext context) {
-           return Container(child: editCon(title ,c,key),);
+           return Container(child: editContainer(title ,c,key,tit),);
 
          }, context: context);
        },
@@ -136,7 +137,7 @@ import 'dart:convert';
       }
 
       myStyle() {
-      return GoogleFonts.alata(fontSize: 24,fontWeight: FontWeight.bold);
+      return GoogleFonts.alata(fontSize: 15,fontWeight: FontWeight.bold);
       }
 
       updateDate(dynamic newValue)async {
@@ -163,12 +164,16 @@ import 'dart:convert';
                 return Center(
                   child: Column(children: [
 
-                    myContainer(Text('First Name :${snapshot.data[0]['fName']}',style: myStyle(),),snapshot.data[0]['fName'],firstName,'fName'),
-                    myContainer( Text('Last Name ${snapshot.data[0]['lName']}',style: myStyle()),snapshot.data[0]['lName'],lastName,'lName'),
-                    myContainer(Text('Date of BirthDay :${snapshot.data[0]['bd']}',style: myStyle()),snapshot.data[0]['bd'],dateOfBirth,'bd'),
-                    myContainer( Text('Phone Number : ${snapshot.data[0]['phone']}',style: myStyle()),snapshot.data[0]['phone'],phoneNumber,'phone'),
-                    myContainer( Text('Email : ${snapshot.data[0]['email']}',style: myStyle()),snapshot.data[0]['email'],email,'email'),
-                    myContainer( Text('Bank Account : ${snapshot.data[0]['bankAcc']}',style: myStyle()),snapshot.data[0]['bankAcc'],bankAccountNumber,'bankAcc'),
+                    myContainer(Text('First Name :${snapshot.data[0]['fName']}',style: myStyle(),),snapshot.data[0]['fName'],firstName,'fName','First Name'),
+                    myContainer( Text('Last Name ${snapshot.data[0]['lName']}',style: myStyle()),snapshot.data[0]['lName'],lastName,'lName',
+                    'LastName'),
+                    myContainer(Text('Date of BirthDay :${snapshot.data[0]['bd']}',style: myStyle()),snapshot.data[0]['bd'],dateOfBirth,'bd',
+                    'Date of Birthday'),
+                    myContainer( Text('Phone Number : ${snapshot.data[0]['phone']}',style: myStyle()),snapshot.data[0]['phone'],phoneNumber,'phone','Phone Number'),
+                    myContainer( Text('Email : ${snapshot.data[0]['email']}',style: myStyle()),snapshot.data[0]['email'],email,'email',
+                    'Email'),
+                    myContainer( Text('Bank Account : ${snapshot.data[0]['bankAcc']}',style: myStyle()),snapshot.data[0]['bankAcc'],bankAccountNumber,'bankAcc',
+                    'Bank Acc '),
 
                   ],),
                 );
