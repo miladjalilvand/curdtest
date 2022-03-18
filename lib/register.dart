@@ -78,7 +78,7 @@ class _RegisterStateState extends State<RegisterState> {
     );
   }
 
-  List<Data> dataList =[];
+  List dataList =[];
 
   customFont(double fs ) {
     return GoogleFonts.alata(fontWeight: FontWeight.bold,fontSize: fs);
@@ -120,15 +120,20 @@ class _RegisterStateState extends State<RegisterState> {
             TextButton(onPressed: () async {
 
               Data data = Data(firstName.text, lastName.text, dateOfBirth.text, phoneNumber.text.toString(), email.text, bankAccountNumber.text);
-              dataList.add(data);
-              var jsonData = jsonEncode(dataList);
-              debugPrint(jsonData);
+
+
+
+
 
              await SharedPreferences.getInstance().then((value) {
 
-               value.setString('profileData', jsonData);
-               debugPrint('data saved');
+                 dataList = jsonDecode(value.getString('profileData')??'');
 
+                 dataList.add(data);
+               debugPrint('data saved');
+               debugPrint(dataList.length.toString());
+               var jsonData = jsonEncode(dataList);
+               value.setString('profileData', jsonData);
                Navigator.pop(context);
 
              });
