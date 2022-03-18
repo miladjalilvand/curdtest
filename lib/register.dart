@@ -1,6 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'dart:convert';
 
+import 'data.dart';
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class RegisterState extends StatefulWidget {
@@ -12,14 +14,21 @@ class RegisterState extends StatefulWidget {
 
 class _RegisterStateState extends State<RegisterState> {
 
-    String ?firstName,lastName,dateOfBirth,phoneNumber,email,bankAccountNumber;
+     TextEditingController firstName=TextEditingController();
+     TextEditingController lastName=TextEditingController();
+     TextEditingController  dateOfBirth = TextEditingController();
+     TextEditingController phoneNumber = TextEditingController();
+     TextEditingController email =TextEditingController();
+     TextEditingController bankAccountNumber=TextEditingController();
 
-  Widget customTextField(String title,String value,Icon ic,int l,bool numCheck) {
+
+  Widget customTextField(String title,var value,Icon ic,int l,bool numCheck) {
     return     TextField(
 
 
 
       textAlign: TextAlign.start,
+      controller: value,
       maxLength: l,
       minLines: 1,
       cursorWidth: 1,
@@ -29,10 +38,6 @@ class _RegisterStateState extends State<RegisterState> {
       maxLines: 1,
       keyboardType: numCheck ?   TextInputType.number
       :TextInputType.text,
-      onChanged: (v){
-        value = v;
-        debugPrint('$title : $v');
-          },
 
       decoration: InputDecoration(
 
@@ -71,6 +76,8 @@ class _RegisterStateState extends State<RegisterState> {
     );
   }
 
+  List<Data> dataList =[];
+
   customFont(double fs ) {
     return GoogleFonts.alata(fontWeight: FontWeight.bold,fontSize: fs);
   }
@@ -92,26 +99,42 @@ class _RegisterStateState extends State<RegisterState> {
 
                 Expanded(
                     flex:6,
-                    child: customTextField('title', firstName??'',const Icon(Icons.abc_outlined),30,false)
+                    child: customTextField('title', firstName,const Icon(Icons.abc_outlined),30,false)
                 ),
                 const SizedBox(width: 3,),
 
                 Expanded(
                     flex: 9,
-                    child: customTextField('lastName',lastName??'',const Icon(Icons.abc_outlined),30,false)),
+                    child: customTextField('lastName',lastName,const Icon(Icons.abc_outlined),30,false)),
               ],
             ),
 
-            customTextField('dateOfBirth',dateOfBirth??'',const Icon(Icons.calendar_today_outlined
+            customTextField('dateOfBirth',dateOfBirth,const Icon(Icons.calendar_today_outlined
               ,size: 24,),15,false),
 
-            customTextField('PhoneNumber',phoneNumber??'',const Icon(Icons.add_call,size: 24,),15,true),
+            customTextField('PhoneNumber',phoneNumber,const Icon(Icons.add_call,size: 24,),15,true),
 
-            customTextField('Email',email??'',const Icon(Icons.email,size: 24,),90,false),
+            customTextField('Email',email,const Icon(Icons.email,size: 24,),90,false),
 
-            customTextField('BankAccountNumber',bankAccountNumber??'',const Icon(Icons.comment_bank,size: 24,),120,false),
+            customTextField('BankAccountNumber',bankAccountNumber,const Icon(Icons.comment_bank,size: 24,),120,false),
 
-            TextButton(onPressed: (){}, child: Text('SAVE',style:customFont(15),))
+            TextButton(onPressed: () async {
+
+              Data data = Data(firstName.text, lastName.text, dateOfBirth.text, phoneNumber.text, email.text, bankAccountNumber.text);
+              dataList.add(data);
+              var jsonData = jsonEncode(dataList);
+              debugPrint(jsonData);
+
+             await SharedPreferences.getInstance().then((value) {
+
+               value.setString('profileData', jsonData);
+               debugPrint('data saved');
+
+             });
+
+
+
+            }, child: Text('SAVE',style:customFont(15),))
 
 
           ],

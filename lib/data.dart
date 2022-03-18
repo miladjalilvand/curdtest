@@ -8,7 +8,12 @@ class Data{
 
   Data(this.firstName, this.lastName, this.birthDay, this.phone, this.email, this.bankAcc);
 
-
-
-
+  Map toJson() => {
+    'fName': firstName,
+    'lName': lastName,
+    'bd': birthDay,
+    'phone': phone,
+    'email': email,
+    'bankAcc': bankAcc,
+  };
 }
