@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:curdapp/home.dart';
+
 
 import 'data.dart';
 import 'package:flutter/material.dart';

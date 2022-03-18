@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import 'package:curdapp/data.dart';
+
 import 'package:curdapp/register.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'home.dart';
+import 'edit_stage.dart';
 
 void main() {runApp(const MyApp());}
 
@@ -61,6 +61,9 @@ class _FirstPageState extends State<FirstPage> {
             return Padding(
               padding: const EdgeInsets.only(top : 18.0,left: 15,right: 15),
               child: GestureDetector(
+                onDoubleTap: (){
+
+                },
                 onTap: (){
                   Navigator.push(context, MaterialPageRoute(builder: (context)=>
                    Home(index: index,))
@@ -75,8 +78,8 @@ class _FirstPageState extends State<FirstPage> {
                     children: [
                       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(allData[index]['fName'],style: styleG(21),),
-                          Text(allData[index]['lName'],style: styleG(21),),
+                          Text(allData[index]['fName'],style: styleG(12),),
+                          Text(allData[index]['lName'],style: styleG(12),),
                           Text(allData[index]['bd'],style: styleG(21),),
                         ],
                       ),
