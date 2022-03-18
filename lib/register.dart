@@ -87,14 +87,11 @@ class _RegisterStateState extends State<RegisterState> {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-      appBar:  AppBar(),
       body:  SingleChildScrollView(
         child:
         Padding(
           padding: const EdgeInsets.only(top : 36.0,left: 12,right: 12),
           child: Column(mainAxisAlignment: MainAxisAlignment.spaceAround,children: [
-            Text('welcome',style:customFont(33)),
-            const SizedBox(height: 42,),
 
             Row(
               children: [
@@ -131,8 +128,8 @@ class _RegisterStateState extends State<RegisterState> {
 
                value.setString('profileData', jsonData);
                debugPrint('data saved');
-               Navigator.push(context, MaterialPageRoute(builder: (context)=>
-               const Home()));
+
+               Navigator.pop(context);
 
              });
 
