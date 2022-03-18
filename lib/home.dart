@@ -5,7 +5,8 @@ import 'dart:convert';
 
 
     class Home extends StatefulWidget {
-      const Home({Key? key}) : super(key: key);
+      final int index ;
+       const Home({Key? key,required this.index}) : super(key: key);
 
       @override
       State<Home> createState() => _HomeState();
@@ -164,15 +165,15 @@ import 'dart:convert';
                 return Center(
                   child: Column(children: [
 
-                    myContainer(Text('First Name :${snapshot.data[0]['fName']}',style: myStyle(),),snapshot.data[0]['fName'],firstName,'fName','First Name'),
-                    myContainer( Text('Last Name ${snapshot.data[0]['lName']}',style: myStyle()),snapshot.data[0]['lName'],lastName,'lName',
+                    myContainer(Text('First Name :${snapshot.data[widget.index]['fName']}',style: myStyle(),),snapshot.data[0]['fName'],firstName,'fName','First Name'),
+                    myContainer( Text('Last Name ${snapshot.data[widget.index]['lName']}',style: myStyle()),snapshot.data[0]['lName'],lastName,'lName',
                     'LastName'),
-                    myContainer(Text('Date of BirthDay :${snapshot.data[0]['bd']}',style: myStyle()),snapshot.data[0]['bd'],dateOfBirth,'bd',
+                    myContainer(Text('Date of BirthDay :${snapshot.data[widget.index]['bd']}',style: myStyle()),snapshot.data[0]['bd'],dateOfBirth,'bd',
                     'Date of Birthday'),
-                    myContainer( Text('Phone Number : ${snapshot.data[0]['phone']}',style: myStyle()),snapshot.data[0]['phone'],phoneNumber,'phone','Phone Number'),
-                    myContainer( Text('Email : ${snapshot.data[0]['email']}',style: myStyle()),snapshot.data[0]['email'],email,'email',
+                    myContainer( Text('Phone Number : ${snapshot.data[widget.index]['phone']}',style: myStyle()),snapshot.data[0]['phone'],phoneNumber,'phone','Phone Number'),
+                    myContainer( Text('Email : ${snapshot.data[widget.index]['email']}',style: myStyle()),snapshot.data[0]['email'],email,'email',
                     'Email'),
-                    myContainer( Text('Bank Account : ${snapshot.data[0]['bankAcc']}',style: myStyle()),snapshot.data[0]['bankAcc'],bankAccountNumber,'bankAcc',
+                    myContainer( Text('Bank Account : ${snapshot.data[widget.index]['bankAcc']}',style: myStyle()),snapshot.data[0]['bankAcc'],bankAccountNumber,'bankAcc',
                     'Bank Acc '),
 
                   ],),

@@ -44,6 +44,8 @@ class _FirstPageState extends State<FirstPage> {
 
   }
 
+  styleG(double fs) => GoogleFonts.alata(fontSize: fs,fontWeight: FontWeight.w500);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(floatingActionButton: FloatingActionButton.small(onPressed: (){
@@ -56,16 +58,34 @@ class _FirstPageState extends State<FirstPage> {
         if (snapshot.hasData) {
           return ListView.builder(itemCount: allData.length,itemBuilder: (BuildContext context, int index) {
 
-            return GestureDetector(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>
-                const Home())
+            return Padding(
+              padding: const EdgeInsets.only(top : 18.0,left: 15,right: 15),
+              child: GestureDetector(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>
+                   Home(index: index,))
 
-                );
-              },
-              child: Container(
-                decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(12))),
-                child: Text(allData[index]['fName'],),
+                  );
+                },
+                child: Container(
+                  decoration: const BoxDecoration(
+                      color: Colors.white10,
+                      borderRadius: BorderRadius.all(Radius.circular(12))),
+                  child: Column(
+                    children: [
+                      Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(allData[index]['fName'],style: styleG(21),),
+                          Text(allData[index]['lName'],style: styleG(21),),
+                          Text(allData[index]['bd'],style: styleG(21),),
+                        ],
+                      ),
+                      Text(allData[index]['phone'],style: styleG(21),),
+                      Text(allData[index]['email'],style: styleG(21),),
+                      Text(allData[index]['bankAcc'],style: styleG(21),),
+                    ],
+                  ),
+                ),
               ),
             );
 
