@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:curdapp/Home.dart';
+import 'package:curdapp/home.dart';
 
 import 'data.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +25,7 @@ class _RegisterStateState extends State<RegisterState> {
 
 
   Widget customTextField(String title,var value,Icon ic,int l,bool numCheck) {
-    return     TextField(
+    return TextField(
 
 
 
