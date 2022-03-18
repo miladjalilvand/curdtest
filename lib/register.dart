@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:curdapp/Home.dart';
+
 import 'data.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -120,7 +122,7 @@ class _RegisterStateState extends State<RegisterState> {
 
             TextButton(onPressed: () async {
 
-              Data data = Data(firstName.text, lastName.text, dateOfBirth.text, phoneNumber.text, email.text, bankAccountNumber.text);
+              Data data = Data(firstName.text, lastName.text, dateOfBirth.text, phoneNumber.text.toString(), email.text, bankAccountNumber.text);
               dataList.add(data);
               var jsonData = jsonEncode(dataList);
               debugPrint(jsonData);
@@ -129,6 +131,8 @@ class _RegisterStateState extends State<RegisterState> {
 
                value.setString('profileData', jsonData);
                debugPrint('data saved');
+               Navigator.push(context, MaterialPageRoute(builder: (context)=>
+               const Home()));
 
              });
 
