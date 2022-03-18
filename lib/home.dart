@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
+
+
     class Home extends StatefulWidget {
       const Home({Key? key}) : super(key: key);
 
@@ -22,9 +24,15 @@ import 'dart:convert';
       String newVal = 'val';
 
       bool editor = false;
+
+      List myData= [];
+
     Future<dynamic>  loadData() async {
 
         SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+        setState(() {
+          myData = jsonDecode(sharedPreferences.getString('profileData')??'');
+        });
 
         return jsonDecode(sharedPreferences.getString('profileData')??'');
 
@@ -32,7 +40,7 @@ import 'dart:convert';
 
       }
 
-      editCon(String title,dynamic controller){
+      editCon(String title,dynamic controller,String key){
       return  Padding(
           padding: const EdgeInsets.only(top:30.0,left: 15,right: 15),
           child: Column(
@@ -91,8 +99,12 @@ import 'dart:convert';
 
               ),
               IconButton(onPressed: (){
-
-
+                setState(() {
+                 myData[0][key]=controller.text;
+                });
+               // editProfile(jsonEncode(myData));
+                updateDate(myData);
+                Navigator.pop(context);
               }, icon: const Icon(Icons.done))
             ],
           ),
@@ -100,12 +112,12 @@ import 'dart:convert';
       );
       }
 
-       myContainer(Widget w,String title,dynamic c) {
+       myContainer(Widget w,String title,dynamic c,String key) {
        return GestureDetector(
          onTap: (){
 
          showModalBottomSheet(builder: (BuildContext context) {
-           return Container(child: editCon(title ,c),);
+           return Container(child: editCon(title ,c,key),);
 
          }, context: context);
        },
@@ -127,7 +139,7 @@ import 'dart:convert';
       return GoogleFonts.alata(fontSize: 24,fontWeight: FontWeight.bold);
       }
 
-      editProfile(String newValue)async {
+      updateDate(dynamic newValue)async {
 
 
         SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
@@ -151,12 +163,12 @@ import 'dart:convert';
                 return Center(
                   child: Column(children: [
 
-                    myContainer(Text('First Name :${snapshot.data[0]['fName']}',style: myStyle(),),snapshot.data[0]['fName'],firstName),
-                    myContainer( Text('Last Name ${snapshot.data[0]['lName']}',style: myStyle()),snapshot.data[0]['lName'],lastName),
-                    myContainer(Text('Date of BirthDay :${snapshot.data[0]['bd']}',style: myStyle()),snapshot.data[0]['bd'],dateOfBirth),
-                    myContainer( Text('Phone Number : ${snapshot.data[0]['phone']}',style: myStyle()),snapshot.data[0]['phone'],phoneNumber),
-                    myContainer( Text('Email : ${snapshot.data[0]['email']}',style: myStyle()),snapshot.data[0]['email'],email),
-                    myContainer( Text('Bank Account : ${snapshot.data[0]['bankAcc']}',style: myStyle()),snapshot.data[0]['bankAcc'],bankAccountNumber),
+                    myContainer(Text('First Name :${snapshot.data[0]['fName']}',style: myStyle(),),snapshot.data[0]['fName'],firstName,'fName'),
+                    myContainer( Text('Last Name ${snapshot.data[0]['lName']}',style: myStyle()),snapshot.data[0]['lName'],lastName,'lName'),
+                    myContainer(Text('Date of BirthDay :${snapshot.data[0]['bd']}',style: myStyle()),snapshot.data[0]['bd'],dateOfBirth,'bd'),
+                    myContainer( Text('Phone Number : ${snapshot.data[0]['phone']}',style: myStyle()),snapshot.data[0]['phone'],phoneNumber,'phone'),
+                    myContainer( Text('Email : ${snapshot.data[0]['email']}',style: myStyle()),snapshot.data[0]['email'],email,'email'),
+                    myContainer( Text('Bank Account : ${snapshot.data[0]['bankAcc']}',style: myStyle()),snapshot.data[0]['bankAcc'],bankAccountNumber,'bankAcc'),
 
                   ],),
                 );
