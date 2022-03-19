@@ -40,6 +40,7 @@ class _FirstPageState extends State<FirstPage> {
     setState(() {
       allData = jsonDecode(sharedPreferences.getString('profileData')??'');
     });
+    debugPrint(allData.toString());
     return allData;
 
   }

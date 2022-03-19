@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 
-
 import 'data.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,6 +14,12 @@ class RegisterState extends StatefulWidget {
 }
 
 class _RegisterStateState extends State<RegisterState> {
+
+
+
+  bool checkData = false;
+
+
 
      TextEditingController firstName=TextEditingController();
      TextEditingController lastName=TextEditingController();
@@ -119,24 +124,59 @@ class _RegisterStateState extends State<RegisterState> {
 
             TextButton(onPressed: () async {
 
+
+             SharedPreferences sh= await SharedPreferences.getInstance();
               Data data = Data(firstName.text, lastName.text, dateOfBirth.text, phoneNumber.text.toString(), email.text, bankAccountNumber.text);
 
+              var tmpData = sh.getString('profileData');
+
+              setState(() {
+                if (tmpData != '') {
+                   setState(() {
+                     dataList = jsonDecode(tmpData??'');
+                   });
+                  debugPrint(dataList.toString());
+
+                  debugPrint('check!');
+
+                }
+              });
+
+
+
+              dataList.add(data);
+
+              debugPrint(dataList.length.toString());
+
+              //
+              // while(i>=0){
+              //
+              //   if (i != 0) {
+              //     if(dataList[i]['fName'] == firstName.text){
+              //       debugPrint('name is Already');
+              //       break;
+              //
+              //     }else if(dataList[i]['lName'] == lastName.text){
+              //       debugPrint('family is Already');
+              //       break;
+              //     }else if(dataList[i]['email'] == dateOfBirth.text){
+              //       debugPrint('email is Already');
+              //       break;
+              //     }
+              //     else {
+              //       i --;
+              //     }
+              //   }else {
+              //
+
+
+                var jsonData = jsonEncode(dataList);
+                sh.setString('profileData', jsonData);
+                Navigator.pop(context);  debugPrint('data saved');
 
 
 
 
-             await SharedPreferences.getInstance().then((value) {
-
-                 dataList = jsonDecode(value.getString('profileData')??'');
-
-                 dataList.add(data);
-               debugPrint('data saved');
-               debugPrint(dataList.length.toString());
-               var jsonData = jsonEncode(dataList);
-               value.setString('profileData', jsonData);
-               Navigator.pop(context);
-
-             });
 
 
 
